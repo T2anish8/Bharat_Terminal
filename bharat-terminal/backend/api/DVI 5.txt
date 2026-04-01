@@ -1,0 +1,56 @@
+	import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import zipfile
+
+# Load CSV (adjust name if needed)
+df = pd.read_csv(r"C:\Users\DSATM\Downloads\data.csv", encoding='ISO-8859-1')
+# Convert date column
+df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
+
+# Create Month column
+df['Month'] = df['InvoiceDate'].dt.to_period('M')
+
+# Remove negative or missing values
+df = df[df['Quantity'] > 0]
+df = df[df['UnitPrice'] > 0]
+df['Sales'] = df['Quantity'] * df['UnitPrice']
+np.random.seed(42)
+df['Discount'] = np.random.uniform(0.05, 0.3, len(df))
+df['Final_Sales'] = df['Sales'] * (1 - df['Discount'])
+df['Profit'] = df['Final_Sales'] * np.random.uniform(0.1, 0.3, len(df))
+monthly = df.groupby('Month').agg({
+    'Final_Sales': 'sum',
+    'Profit': 'sum',
+    'Discount': 'mean'
+}).reset_index()
+
+monthly.columns = ['Month', 'Total_Sales', 'Total_Profit', 'Avg_Discount']
+monthly['Profit_Margin'] = (monthly['Total_Profit'] / monthly['Total_Sales']) * 100
+total_sales = monthly['Total_Sales'].sum()
+avg_profit_margin = monthly['Profit_Margin'].mean()
+avg_discount = monthly['Avg_Discount'].mean()
+
+print("=== KPI WALLBOARD ===")
+print(f"Total Sales: {total_sales:.2f}")
+print(f"Profit Margin: {avg_profit_margin:.2f}%")
+print(f"Avg Discount: {avg_discount:.2f}")
+plt.figure(figsize=(12,5))
+
+# Sales Trend
+plt.plot(monthly['Month'].astype(str), monthly['Total_Sales'], marker='o')
+plt.title("Monthly Sales Trend")
+plt.xticks(rotation=45)
+plt.show()
+
+# Profit Margin Trend
+plt.plot(monthly['Month'].astype(str), monthly['Profit_Margin'], marker='o')
+plt.title("Profit Margin Trend")
+plt.xticks(rotation=45)
+plt.show()
+
+# Discount Trend
+plt.plot(monthly['Month'].astype(str), monthly['Avg_Discount'], marker='o')
+plt.title("Average Discount Trend")
+plt.xticks(rotation=45)
+plt.show()

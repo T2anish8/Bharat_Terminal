@@ -1,0 +1,19 @@
+=== Bharat Terminal Startup Log ===
+Python: 3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]
+numpy  2.1.3 OK
+pandas 2.2.3 OK
+fastapi  0.135.1 OK
+yfinance 1.2.0 OK
+Importing routes...
+  routes_market OK
+  routes_stock  OK
+  routes_search OK
+  routes_news   OK
+  routes_ml     OK
+  routes_map    OK
+  routes_trades OK
+
+ALL IMPORTS OK
+Starting server on http://127.0.0.1:8000
+Frontend:  http://localhost:5173
+

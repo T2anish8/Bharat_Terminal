@@ -1,0 +1,21 @@
+import torch 
+import torch.nn as nn
+import torch.optim as optim
+
+x = torch.tensor([[1.],[2.],[3.],[4.]])
+y = torch.tensor([[2.],[4.],[6.],[8.]])
+
+model = nn.Linear(1,1)
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.01)
+for epoch in range(100):
+    model.train()
+    optimizer.zero_grad()
+    outputs = model(x)
+    Loss = criterion(outputs, y)
+    Loss.backward()
+    optimizer.step()
+    print(f'Epoch {epoch+1}/100,Loss:{Loss.item()}')
+    predicted = model(x).detach()
+    print(predicted)
+    

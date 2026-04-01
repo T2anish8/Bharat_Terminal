@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bharat Terminal</title>
+
+    <!-- Must set CESIUM_BASE_URL before loading Cesium.js -->
+    <script>
+      window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/';
+    </script>
+
+    <!-- CesiumJS via CDN -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+    <style>
+      * { margin:0; padding:0; box-sizing:border-box; }
+      html, body, #root { width:100vw; height:100vh; overflow:hidden; background:#000510; }
+
+      /* Hide Cesium branding */
+      .cesium-widget-credits,
+      .cesium-viewer-bottom,
+      .cesium-credit-lightbox-overlay,
+      .cesium-credit-expand-link { display:none !important; }
+
+      /* Cesium fills its container */
+      .cesium-viewer,
+      .cesium-viewer-cesiumWidgetContainer,
+      .cesium-widget,
+      .cesium-widget canvas {
+        width:100% !important;
+        height:100% !important;
+        display:block !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
